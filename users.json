@@ -5,14 +5,17 @@
     "storage": "2.4GB / 5GB",
     "uptime": "99.9%",
     "status": "online",
-    "health": 96
+    "health": 96,
+    "serviceStarted": "2026-06-18"
   },
+
   "test": {
     "password": "test",
     "domain": "test.rude.li",
     "storage": "1GB / 5GB",
     "uptime": "98.2%",
     "status": "offline",
-    "health": 95
+    "health": 95,
+    "serviceStarted": "2026-01-01"
   }
 }
