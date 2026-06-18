@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Dashboard</title>
+</head>
+<body>
+
+<h1>Hylex Dashboard</h1>
+
+<h2 id="domain"></h2>
+
+<div id="status"></div>
+<div id="health"></div>
+<div id="storage"></div>
+<div id="uptime"></div>
+
+<script>
+
+let user = localStorage.getItem("user");
+
+fetch("/user/" + user)
+.then(r => r.json())
+.then(data => {
+
+document.getElementById("domain").innerText = data.domain;
+
+document.getElementById("status").innerText = "Status: " + data.status;
+
+document.getElementById("health").innerText = "Health: " + data.health + "%";
+
+document.getElementById("storage").innerText = "Storage: " + data.storage;
+
+document.getElementById("uptime").innerText = "Uptime: " + data.uptime;
+
+});
+
+</script>
+
+</body>
+</html>
