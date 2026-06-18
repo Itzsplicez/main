@@ -1,0 +1,18 @@
+{
+  "splice": {
+    "password": "1234",
+    "domain": "hylex.rude.li",
+    "storage": "2.4GB / 5GB",
+    "uptime": "99.9%",
+    "status": "online",
+    "health": 96
+  },
+  "test": {
+    "password": "test",
+    "domain": "test.rude.li",
+    "storage": "1GB / 5GB",
+    "uptime": "98.2%",
+    "status": "offline",
+    "health": 95
+  }
+}
