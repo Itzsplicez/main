@@ -2,8 +2,8 @@
   "Itzsplicez": {
     "password": "admin",
     "domain": "hylex.rude.li",
-    "storage": "2.4GB / 5GB",
-    "uptime": "99.9%",
+    "storage": "2.4GB / 7.5GB",
+    "uptime": "94%",
     "status": "online",
     "health": 96,
     "serviceStarted": "2026-06-18"
@@ -11,9 +11,9 @@
 
   "test": {
     "password": "test",
-    "domain": "test.rude.li",
-    "storage": "1GB / 5GB",
-    "uptime": "98.2%",
+    "domain": "test.hy.moo",
+    "storage": "1GB / 2GB",
+    "uptime": "12%",
     "status": "offline",
     "health": 95,
     "serviceStarted": "2026-01-01"
