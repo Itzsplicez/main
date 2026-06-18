@@ -1,40 +1,347 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-<title>Dashboard</title>
+
+<title>Hylex Panel</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
+
+<style>
+
+
+*{
+box-sizing:border-box;
+}
+
+
+body{
+
+margin:0;
+background:#000;
+color:white;
+font-family:Poppins;
+
+}
+
+
+header{
+
+padding:30px;
+text-align:center;
+
+}
+
+
+.container{
+
+max-width:900px;
+margin:auto;
+padding:20px;
+
+}
+
+
+.website-card{
+
+background:#111;
+border:1px solid #222;
+border-radius:30px;
+
+padding:35px;
+
+}
+
+
+
+.online{
+
+display:inline-block;
+
+background:#063d18;
+
+color:#00ff66;
+
+padding:8px 18px;
+
+border-radius:20px;
+
+}
+
+
+.offline{
+
+display:inline-block;
+
+background:#3d0606;
+
+color:#ff4444;
+
+padding:8px 18px;
+
+border-radius:20px;
+
+}
+
+
+
+.stats{
+
+display:grid;
+
+grid-template-columns:repeat(2,1fr);
+
+gap:15px;
+
+margin-top:25px;
+
+}
+
+
+
+.box{
+
+background:#050505;
+
+border:1px solid #222;
+
+border-radius:20px;
+
+padding:25px;
+
+text-align:center;
+
+}
+
+
+
+.health{
+
+margin-top:20px;
+
+height:12px;
+
+background:#333;
+
+border-radius:20px;
+
+overflow:hidden;
+
+}
+
+
+
+.health-bar{
+
+height:100%;
+
+background:white;
+
+transition:.5s;
+
+}
+
+
+
+@media(max-width:700px){
+
+.stats{
+
+grid-template-columns:1fr;
+
+}
+
+}
+
+
+</style>
+
 </head>
+
+
 <body>
 
-<h1>Hylex Dashboard</h1>
 
-<h2 id="domain"></h2>
 
-<div id="status"></div>
-<div id="health"></div>
-<div id="storage"></div>
-<div id="uptime"></div>
+<header>
+
+<h1>Hylex Panel</h1>
+
+<p id="user"></p>
+
+</header>
+
+
+
+
+<div class="container">
+
+
+
+<div class="website-card">
+
+
+<h2 id="domain">
+Loading...
+</h2>
+
+
+<div id="status">
+</div>
+
+
+
+<h3>
+Website Health
+</h3>
+
+
+<div class="health">
+
+<div id="healthBar" class="health-bar"></div>
+
+</div>
+
+
+<p id="healthText">
+</p>
+
+
+
+
+<div class="stats">
+
+
+
+<div class="box">
+
+<h3>Storage</h3>
+
+<p id="storage">
+</p>
+
+</div>
+
+
+
+
+<div class="box">
+
+<h3>Uptime</h3>
+
+<p id="uptime">
+</p>
+
+</div>
+
+
+
+</div>
+
+
+
+</div>
+
+
+
+</div>
+
+
+
 
 <script>
 
-let user = localStorage.getItem("user");
 
-fetch("/user/" + user)
-.then(r => r.json())
+let username = localStorage.getItem("user");
+
+
+
+if(!username){
+
+window.location="index.html";
+
+}
+
+
+
+document.getElementById("user").innerHTML =
+"Logged in as " + username;
+
+
+
+fetch("/user/" + username)
+
+
+.then(res => res.json())
+
+
 .then(data => {
 
-document.getElementById("domain").innerText = data.domain;
 
-document.getElementById("status").innerText = "Status: " + data.status;
 
-document.getElementById("health").innerText = "Health: " + data.health + "%";
+document.getElementById("domain").innerHTML =
+data.domain;
 
-document.getElementById("storage").innerText = "Storage: " + data.storage;
 
-document.getElementById("uptime").innerText = "Uptime: " + data.uptime;
+
+let status =
+document.getElementById("status");
+
+
+
+if(data.status == "online"){
+
+
+status.className="online";
+
+status.innerHTML="● Online";
+
+
+}
+
+else{
+
+
+status.className="offline";
+
+status.innerHTML="● Offline";
+
+
+}
+
+
+
+
+
+document.getElementById("storage").innerHTML =
+data.storage;
+
+
+
+document.getElementById("uptime").innerHTML =
+data.uptime;
+
+
+
+
+document.getElementById("healthText").innerHTML =
+data.health + "% Healthy";
+
+
+
+document.getElementById("healthBar").style.width =
+data.health + "%";
+
+
 
 });
 
+
 </script>
 
+
+
 </body>
+
 </html>
