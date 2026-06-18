@@ -10,7 +10,6 @@
 
 <style>
 
-
 *{
 box-sizing:border-box;
 }
@@ -30,8 +29,43 @@ header{
 
 padding:30px;
 text-align:center;
+position:relative;
 
 }
+
+
+
+.logout{
+
+position:absolute;
+
+right:30px;
+
+top:30px;
+
+padding:10px 20px;
+
+border-radius:20px;
+
+background:#111;
+
+border:1px solid #333;
+
+color:white;
+
+cursor:pointer;
+
+}
+
+
+.logout:hover{
+
+background:white;
+
+color:black;
+
+}
+
 
 
 .container{
@@ -43,10 +77,13 @@ padding:20px;
 }
 
 
+
 .website-card{
 
 background:#111;
+
 border:1px solid #222;
+
 border-radius:30px;
 
 padding:35px;
@@ -70,6 +107,7 @@ border-radius:20px;
 }
 
 
+
 .offline{
 
 display:inline-block;
@@ -81,6 +119,34 @@ color:#ff4444;
 padding:8px 18px;
 
 border-radius:20px;
+
+}
+
+
+
+.health{
+
+margin-top:20px;
+
+height:12px;
+
+background:#333;
+
+border-radius:20px;
+
+overflow:hidden;
+
+}
+
+
+
+.health-bar{
+
+height:100%;
+
+background:white;
+
+transition:.5s;
 
 }
 
@@ -116,29 +182,17 @@ text-align:center;
 
 
 
-.health{
+.info{
 
 margin-top:20px;
 
-height:12px;
+background:#050505;
 
-background:#333;
+border:1px solid #222;
 
 border-radius:20px;
 
-overflow:hidden;
-
-}
-
-
-
-.health-bar{
-
-height:100%;
-
-background:white;
-
-transition:.5s;
+padding:20px;
 
 }
 
@@ -152,10 +206,21 @@ grid-template-columns:1fr;
 
 }
 
+
+.logout{
+
+position:static;
+
+margin-top:15px;
+
+}
+
 }
 
 
+
 </style>
+
 
 </head>
 
@@ -166,9 +231,19 @@ grid-template-columns:1fr;
 
 <header>
 
+
 <h1>Hylex Panel</h1>
 
+
 <p id="user"></p>
+
+
+<button class="logout" onclick="logout()">
+
+Logout
+
+</button>
+
 
 </header>
 
@@ -182,30 +257,63 @@ grid-template-columns:1fr;
 <div class="website-card">
 
 
+
 <h2 id="domain">
+
 Loading...
+
 </h2>
 
 
+
+
 <div id="status">
+
 </div>
+
 
 
 
 <h3>
+
 Website Health
+
 </h3>
+
 
 
 <div class="health">
 
+
 <div id="healthBar" class="health-bar"></div>
+
 
 </div>
 
 
+
 <p id="healthText">
+
 </p>
+
+
+
+
+<div class="info">
+
+
+<p id="registered">
+
+</p>
+
+
+<p id="daysLeft">
+
+</p>
+
+
+</div>
+
 
 
 
@@ -216,26 +324,39 @@ Website Health
 
 <div class="box">
 
-<h3>Storage</h3>
+
+<h3>
+
+Storage
+
+</h3>
+
 
 <p id="storage">
+
 </p>
 
+
 </div>
+
 
 
 
 
 <div class="box">
 
-<h3>Uptime</h3>
+
+<h3>
+
+Uptime
+
+</h3>
+
 
 <p id="uptime">
+
 </p>
 
-</div>
-
-
 
 </div>
 
@@ -245,7 +366,13 @@ Website Health
 
 
 
+
 </div>
+
+
+</div>
+
+
 
 
 
@@ -265,37 +392,52 @@ window.location="index.html";
 
 
 
-document.getElementById("user").innerHTML =
+
+document.getElementById("user").textContent =
+
 "Logged in as " + username;
+
+
+
 
 
 
 fetch("/user/" + username)
 
 
-.then(res => res.json())
 
-
-.then(data => {
+.then(res=>res.json())
 
 
 
-document.getElementById("domain").innerHTML =
+.then(data=>{
+
+
+
+
+
+document.getElementById("domain").textContent =
+
 data.domain;
 
 
 
-let status =
-document.getElementById("status");
+
+
+let status = document.getElementById("status");
 
 
 
-if(data.status == "online"){
+
+
+if(data.status === "online"){
+
 
 
 status.className="online";
 
-status.innerHTML="● Online";
+status.textContent="● Online";
+
 
 
 }
@@ -303,9 +445,11 @@ status.innerHTML="● Online";
 else{
 
 
+
 status.className="offline";
 
-status.innerHTML="● Offline";
+status.textContent="● Offline";
+
 
 
 }
@@ -314,28 +458,95 @@ status.innerHTML="● Offline";
 
 
 
-document.getElementById("storage").innerHTML =
+
+document.getElementById("storage").textContent =
+
 data.storage;
 
 
 
-document.getElementById("uptime").innerHTML =
+
+
+
+document.getElementById("uptime").textContent =
+
 data.uptime;
 
 
 
 
-document.getElementById("healthText").innerHTML =
+
+
+document.getElementById("healthText").textContent =
+
 data.health + "% Healthy";
 
 
 
+
+
+
 document.getElementById("healthBar").style.width =
+
 data.health + "%";
 
 
 
+
+
+
+document.getElementById("registered").textContent =
+
+"Domain Registered: " + data.serviceStarted;
+
+
+
+
+
+
+document.getElementById("daysLeft").textContent =
+
+"Plan Days Left: " + data.daysLeft + " days";
+
+
+
+
+
 });
+
+
+
+
+
+
+
+
+function logout(){
+
+
+localStorage.clear();
+
+
+
+document.cookie.split(";").forEach(cookie=>{
+
+
+document.cookie =
+
+cookie.replace(/^ +/, "")
+
+.replace(/=.*/, "=;expires=" + new Date(0).toUTCString() + ";path=/");
+
+
+});
+
+
+
+window.location="index.html";
+
+
+}
+
 
 
 </script>
