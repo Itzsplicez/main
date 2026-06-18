@@ -203,7 +203,7 @@ app.post("/admin/update",(req,res)=>{
 
 
 
-    if(adminKey !== "supersecret123"){
+    if(adminKey !== "fish"){
 
 
         return res.json({
