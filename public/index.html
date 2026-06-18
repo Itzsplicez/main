@@ -1,38 +1,160 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Login</title>
+
+<title>Hylex Login</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+box-sizing:border-box;
+}
+
+body{
+margin:0;
+background:#000;
+color:white;
+font-family:Poppins;
+height:100vh;
+display:flex;
+align-items:center;
+justify-content:center;
+}
+
+
+.card{
+
+background:#111;
+border:1px solid #222;
+border-radius:32px;
+padding:40px;
+width:350px;
+text-align:center;
+
+}
+
+
+input{
+
+width:100%;
+padding:14px;
+margin:10px 0;
+
+background:#050505;
+border:1px solid #333;
+border-radius:25px;
+color:white;
+
+}
+
+
+button{
+
+padding:14px 30px;
+
+border-radius:25px;
+
+border:1px solid white;
+
+background:#111;
+
+color:white;
+
+cursor:pointer;
+
+transition:.3s;
+
+}
+
+
+button:hover{
+
+background:white;
+color:black;
+
+}
+
+
+</style>
+
+
 </head>
+
+
 <body>
 
-<h2>Login</h2>
 
-<input id="user" placeholder="username">
-<input id="pass" placeholder="password" type="password">
+<div class="card">
 
-<button onclick="login()">Login</button>
+<h1>Hylex</h1>
+
+<p>Client Login</p>
+
+
+<input id="user" placeholder="Username">
+
+<input id="pass" type="password" placeholder="Password">
+
+
+<button onclick="login()">
+Login
+</button>
+
+
+</div>
+
+
 
 <script>
-function login() {
-    fetch("/login", {
-        method: "POST",
-        headers: {"Content-Type": "application/json"},
-        body: JSON.stringify({
-            user: document.getElementById("user").value,
-            pass: document.getElementById("pass").value
-        })
-    })
-    .then(r => r.json())
-    .then(data => {
-        if (data.success) {
-            localStorage.setItem("user", data.user);
-            window.location = "dashboard.html";
-        } else {
-            alert("Invalid login");
-        }
-    });
+
+function login(){
+
+fetch("/login",{
+
+method:"POST",
+
+headers:{
+"Content-Type":"application/json"
+},
+
+body:JSON.stringify({
+
+user:user.value,
+
+pass:pass.value
+
+})
+
+})
+
+
+.then(r=>r.json())
+
+.then(data=>{
+
+if(data.success){
+
+localStorage.user=data.user;
+
+location="dashboard.html";
+
 }
+
+else{
+
+alert("Invalid login");
+
+}
+
+})
+
+
+}
+
 </script>
+
 
 </body>
 </html>
